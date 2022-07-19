@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { useState } from "react";
+import axios from "axios";
 
 const Contact = () => {
   const [firstName, setFirstName] = useState("");
@@ -25,13 +26,23 @@ const Contact = () => {
         comment: request,
       };
 
-      fetch("https://apifindprosper.verce.app/contact", {
-        method: "POST",
 
-        body: JSON.stringify(posts),
-      })
-        .then((res) => res.json())
-        .then((data) => alert(data.msg));
+      axios.post('https://apifindprosper.verce.app/contact', posts)
+        .then(res => {
+          if (res.data.msg) {
+            alert(`${res.data.msg}`)
+          } else {
+            alert(`e no work`)
+          }
+        }).catch(err => console.log(err))
+
+      // fetch("https://apifindprosper.verce.app/contact", {
+      //   method: "POST",
+
+      //   body: JSON.stringify(posts),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => alert(data.msg));
     }
   };
 
@@ -140,12 +151,7 @@ const Contact = () => {
               <Button
                 type="submit"
                 variant="contained"
-                onClick={() => {
-                  setRequest("");
-                  setEmail("");
-                  setFirstName("");
-                  setLastName("");
-                }}
+
               >
                 Submit
               </Button>
