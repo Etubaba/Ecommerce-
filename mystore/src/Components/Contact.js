@@ -18,20 +18,21 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const posts = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      request: request,
-    };
+    if (firstName !== '' && email !== '') {
+      const posts = {
+        name: firstName,
+        email: email,
+        comment: request,
+      };
 
-    fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
+      fetch("https://apifindprosper.verce.app/contact", {
+        method: "POST",
 
-      body: JSON.stringify(posts),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+        body: JSON.stringify(posts),
+      })
+        .then((res) => res.json())
+        .then((data) => alert(data.msg));
+    }
   };
 
   return (
@@ -112,14 +113,7 @@ const Contact = () => {
                 variant="standard"
                 style={{ marginRight: "4vw" }}
               />
-              <TextField
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                type="text"
-                id="standard-basic"
-                label="Last Name"
-                variant="standard"
-              />
+
               <TextField
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
